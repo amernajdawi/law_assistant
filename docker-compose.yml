@@ -1,0 +1,22 @@
+services:
+  app:
+    build:
+      context: ./expansion_rag # The directory containing the Dockerfile and source code
+      dockerfile: Dockerfile   # The name of the Dockerfile within the context directory
+    image: expansion-rag-app:latest # Optional: Name the image built by Compose
+    ports:
+      - "8000:8000" # Map port 8000 on the host to port 8000 in the container
+    env_file:
+      - ./expansion_rag/.env # Load environment variables from this file
+    container_name: expansion-rag-container # Optional: Give the container a specific name 
+    volumes:
+      - ./expansion_rag/src:/app/src # Bind mount the src directory
+  
+  frontend:
+    build:
+      context: ./expansion_rag_frontend
+      dockerfile: dockerfile
+    image: expansion-rag-frontend:latest
+    ports:
+      - "3000:3000" # Map port 3000 on the host to port 3000 in the container
+    container_name: expansion-rag-frontend-container 
